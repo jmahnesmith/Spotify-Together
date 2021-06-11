@@ -24,12 +24,9 @@ namespace Spotify_Together
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddHttpClient("spotify", x => 
+            services.AddHttpClient("Spotify", x => 
             {
-                x.BaseAddress = new Uri("https://api.spotify.com/v1");
-
-
-
+                x.BaseAddress = new Uri("https://accounts.spotify.com/");
             });
 
         }

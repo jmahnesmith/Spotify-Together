@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -28,9 +30,27 @@ namespace Spotify_Together.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        public async Task<IActionResult> Login([FromServices] IHttpClientFactory factory)
         {
-            return View();
+            var request = new HttpRequestMessage(HttpMethod.Get, "?client_id=" +
+                SpotifyCredentials.CLIENT_ID + "&response_type=code&redirect_uri=https%3A%2F%2Flocalhost:5001%2FHome%2FSuccess&show_dialog=true");
+            var client = factory.CreateClient("Spotify");
+            var response = await client.SendAsync(request);
+            
+            if (response.IsSuccessStatusCode)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                return new ContentResult
+                {
+                    ContentType = "text/html",
+                    StatusCode = (int)HttpStatusCode.OK,
+                    Content = responseString
+                };
+            }
+            else
+            {
+                return Content("Whoops");
+            }
         }
 
         public IActionResult Success()
