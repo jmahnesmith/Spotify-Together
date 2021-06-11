@@ -24,6 +24,14 @@ namespace Spotify_Together
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddHttpClient("spotify", x => 
+            {
+                x.BaseAddress = new Uri("https://api.spotify.com/v1");
+
+
+
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
