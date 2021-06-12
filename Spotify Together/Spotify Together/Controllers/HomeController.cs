@@ -32,7 +32,7 @@ namespace Spotify_Together.Controllers
 
         public IActionResult Login([FromServices] IHttpClientFactory factory)
         {
-            var request = "https://accounts.spotify.com/" + "?client_id=" + SpotifyCredentials.CLIENT_ID + "&response_type=code&redirect_uri=https%3A%2F%2Flocalhost:5001%2FHome%2FSuccess&show_dialog=true";
+            var request = "https://accounts.spotify.com/authorize" + "?client_id=" + SpotifyCredentials.CLIENT_ID + "&response_type=code&redirect_uri=https%3A%2F%2Flocalhost:5001%2FHome%2FSuccess&show_dialog=true";
             return Redirect(request);
             
             /*if (response.IsSuccessStatusCode)
