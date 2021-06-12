@@ -30,14 +30,12 @@ namespace Spotify_Together.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Login([FromServices] IHttpClientFactory factory)
+        public IActionResult Login([FromServices] IHttpClientFactory factory)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "?client_id=" +
-                SpotifyCredentials.CLIENT_ID + "&response_type=code&redirect_uri=https%3A%2F%2Flocalhost:5001%2FHome%2FSuccess&show_dialog=true");
-            var client = factory.CreateClient("Spotify");
-            var response = await client.SendAsync(request);
+            var request = "https://accounts.spotify.com/" + "?client_id=" + SpotifyCredentials.CLIENT_ID + "&response_type=code&redirect_uri=https%3A%2F%2Flocalhost:5001%2FHome%2FSuccess&show_dialog=true";
+            return Redirect(request);
             
-            if (response.IsSuccessStatusCode)
+            /*if (response.IsSuccessStatusCode)
             {
                 var responseString = await response.Content.ReadAsStringAsync();
                 return new ContentResult
@@ -51,6 +49,7 @@ namespace Spotify_Together.Controllers
             {
                 return Content("Whoops");
             }
+            */
         }
 
         public IActionResult Success()
